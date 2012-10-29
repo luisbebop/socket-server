@@ -26,8 +26,7 @@ var port *int = flag.Int("p", 31415, "Port to listen.")
 //struct to share information with websocket clients
 type T struct {
 	Msg  string
-	PosX int
-	PosY int
+	Tps int
 }
 
 func main() {	
@@ -134,9 +133,7 @@ func jsonServer(ws *websocket.Conn) {
 		
 		// Send send a text message serialized T as JSON.
 		msg.Msg = "pong"
-		msg.PosY = 300
-		//calculate the position of Nyan Cat 
-		msg.PosX = stackLastTps.Pop().(int)
+		msg.Tps = stackLastTps.Pop().(int)
 		
 		// Send to the webclients
 		err = websocket.JSON.Send(ws, msg)
